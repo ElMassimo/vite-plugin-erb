@@ -24,17 +24,17 @@
 
 ## Disclaimer ⚠️
 
-This library is intended for legacy projects—please do not use it on new projects.
+This library is intended for __legacy projects__—please do not use it on new projects.
 
-Mixing `.erb` on JS and CSS files can lead to a fragile setup where your
-frontend assets are entangled with your backend setup, making it very hard to
-migrate to different tooling or frameworks.
+Using ERB with JS and CSS files can lead to a fragile setup where your frontend assets
+are entangled with your backend setup, making it very hard to migrate to
+different tooling or frameworks.
 
-The goal of this library is to provide a way to ease out the transition as you
-__gradually remove__ your `.js.erb` and `.css.erb` files.
+The goal of this library is to ease out the transition as you __gradually remove__ your `.js.erb` files.
 
-A safer and better approach if you need to share constants or values is to
-instead [generate JS from Ruby][jsfromroutes].
+If you need to share constants or values between the backend and the frontend,
+a safer and more performant approach is to instead [generate JS or TypeScript from Ruby][jsfromroutes]
+and import it as usual (or viceversa).
 
 ## Why? 🤔
 
@@ -102,13 +102,13 @@ plugins: [
 ],
 ```
 
-### <kbd>engine</kbd>
+### `engine`
 
 The ERB template engine to use. `erubi`, `erubis` and `erb` are supported.
 
 You can manually specify which one to use if needed, but they will be detected automatically.
 
-### <kbd>runner</kbd>
+### `runner`
 
 The command to run the internal ruby script.
 
@@ -117,15 +117,15 @@ application environment.
 
 You may provide `ruby ./boot.rb` or something similar if using other frameworks.
 
-### <kbd>env</env>
+### `env`
 
 Additional environment variables to be passed to runner. Defaults to `process.env`.
 
-### <kbd>extendEnv</env>
+### `extendEnv`
 
 Set to false if you want to override `process.env` instead when providing the <kbd>env</kbd> property.
 
-### <kbd>timeout</kbd>
+### `timeout`
 
 Te Ruby process will be sent a termination signal if it doesn't return a result
 under the specified timeout in millis. Defaults to `10000`.
