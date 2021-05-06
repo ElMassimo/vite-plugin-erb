@@ -44,10 +44,22 @@ importers:
       typescript: ^4.1.3
       vite: ^2.2.0
   test:
+    dependencies:
+      execa: 5.0.0
     devDependencies:
       vite-plugin-erb: 'link:..'
     specifiers:
+      execa: ^5.0.0
       vite-plugin-erb: 'workspace:*'
+  test/fixtures/blog:
+    devDependencies:
+      vite: 2.2.4
+      vite-plugin-erb: 'link:../../..'
+      vite-plugin-ruby: 2.0.3_vite@2.2.4
+    specifiers:
+      vite: ^2.2.3
+      vite-plugin-erb: 'workspace:*'
+      vite-plugin-ruby: ^2.0.2
 lockfileVersion: 5.2
 packages:
   /@babel/code-frame/7.12.11:
@@ -3417,12 +3429,12 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-YfJT7rkpQB0updsdHLGWrvhBJfcfzNNawYDNIyQXJz0IViGf75O8EBPKSdvw2rF+LGCsX4FZ8tcr3b19LcZq4w==
-  /is-core-module/2.2.0:
+  /is-core-module/2.3.0:
     dependencies:
       has: 1.0.3
     dev: true
     resolution:
-      integrity: sha512-XRAfAdyyY5F5cOXn7hYQDqh2Xmii+DEfIcQGxK/uNwMHhIkPWO0g8msXcbzLe+MpGoR951MlqM/2iIlU4vKDdQ==
+      integrity: sha512-xSphU2KG9867tsYdLD4RWQ1VqdFl4HTO9Thf3I/3dLEfr0dbPTWKsuCKrgqMljg4nPE+Gq0VCnzT3gr0CyBmsw==
   /is-data-descriptor/0.1.4:
     dependencies:
       kind-of: 3.2.2
@@ -5263,6 +5275,16 @@ packages:
       node: ^10 || ^12 || >=14
     resolution:
       integrity: sha512-b/h7CPV7QEdrqIxtAf2j31U5ef05uBDuvoXv6L51Q4rcS1jdlXAVKJv+atCFdUXYl9dyTHGyoMzIepwowRJjFw==
+  /postcss/8.2.14:
+    dependencies:
+      colorette: 1.2.2
+      nanoid: 3.1.22
+      source-map: 0.6.1
+    dev: true
+    engines:
+      node: ^10 || ^12 || >=14
+    resolution:
+      integrity: sha512-+jD0ZijcvyCqPQo/m/CW0UcARpdFylq04of+Q7RKX6f/Tu+dvpUI/9Sp81+i6/vJThnOBX09Quw0ZLOVwpzX3w==
   /prelude-ls/1.1.2:
     dev: true
     engines:
@@ -5648,7 +5670,7 @@ packages:
       integrity: sha1-LGN/53yJOv0qZj/iGqkIAGjiBSo=
   /resolve/1.20.0:
     dependencies:
-      is-core-module: 2.2.0
+      is-core-module: 2.3.0
       path-parse: 1.0.6
     dev: true
     resolution:
@@ -5704,6 +5726,15 @@ packages:
       fsevents: 2.3.2
     resolution:
       integrity: sha512-kRRU7wXzFHUzBIv0GfoFFIN3m9oteY4uAsKllIpQDId5cfnkWF2J130l+27dzDju0E6MScKiV0ZM5Bw8m4blYQ==
+  /rollup/2.47.0:
+    dev: true
+    engines:
+      node: '>=10.0.0'
+    hasBin: true
+    optionalDependencies:
+      fsevents: 2.3.2
+    resolution:
+      integrity: sha512-rqBjgq9hQfW0vRmz+0S062ORRNJXvwRpzxhFXORvar/maZqY6za3rgQ/p1Glg+j1hnc1GtYyQCPiAei95uTElg==
   /rsvp/4.8.5:
     dev: true
     engines:
@@ -6689,6 +6720,16 @@ packages:
       '0': node >=0.6.0
     resolution:
       integrity: sha1-OhBcoXBTr1XW4nDB+CiGguGNpAA=
+  /vite-plugin-ruby/2.0.3_vite@2.2.4:
+    dependencies:
+      debug: 4.3.1
+      fast-glob: 3.2.5
+      vite: 2.2.4
+    dev: true
+    peerDependencies:
+      vite: '>=2.2.0'
+    resolution:
+      integrity: sha512-do1ClJcpyZQs5vahxa8VkukN3RwgdkcoRNEFrwUWPbfy/7ZaDMkQ3k0cRYxwTwyCyLnTCH2vy+SAvG+kOk19mA==
   /vite/2.2.1:
     dependencies:
       esbuild: 0.9.7
@@ -6703,6 +6744,20 @@ packages:
       fsevents: 2.3.2
     resolution:
       integrity: sha512-KIqK90EoJJpuqE86Y9DSkZjFNGgsyZX/4I1xENIitLRd3hgRtOlIGCJYrNnBD9/eqipz0OroAiIj9/R1JcOdFA==
+  /vite/2.2.4:
+    dependencies:
+      esbuild: 0.9.7
+      postcss: 8.2.14
+      resolve: 1.20.0
+      rollup: 2.47.0
+    dev: true
+    engines:
+      node: '>=12.0.0'
+    hasBin: true
+    optionalDependencies:
+      fsevents: 2.3.2
+    resolution:
+      integrity: sha512-vnIwSNci+phFMp6krhy+FbYzKL0R67Sdt9mVZ96S27AewrApSJjTqncJcalk8sf60BgcbW4+1C6DFIWkxquO9g==
   /vue-eslint-parser/7.6.0_eslint@7.24.0:
     dependencies:
       debug: 4.3.1

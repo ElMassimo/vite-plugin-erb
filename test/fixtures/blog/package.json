@@ -1,0 +1,7 @@
+{
+  "devDependencies": {
+    "vite":"^2.2.3",
+    "vite-plugin-ruby": "^2.0.2",
+    "vite-plugin-erb": "workspace:*"
+  }
+}
