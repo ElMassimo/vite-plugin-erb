@@ -1,0 +1,7 @@
+{
+  "name": "vite-plugin-erb-tests",
+  "private": true,
+  "devDependencies": {
+    "vite-plugin-erb": "workspace:*"
+  }
+}
