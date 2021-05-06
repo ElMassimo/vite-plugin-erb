@@ -11,10 +11,7 @@ gemfiles/*.lock
 .DS_Store
 
 # Vite on Rails
-/public/vite
-/public/vite-dev
-/public/vite-test
-test/test_app/public/vite-production
+public
 node_modules
 *.local
 .DS_Store

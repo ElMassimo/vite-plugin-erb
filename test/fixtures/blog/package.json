@@ -1,7 +1,11 @@
 {
   "devDependencies": {
-    "vite":"^2.2.3",
-    "vite-plugin-ruby": "^2.0.2",
-    "vite-plugin-erb": "workspace:*"
+    "vite": "^2.2.3",
+    "vite-plugin-erb": "workspace:*",
+    "vite-plugin-ruby": "^2.0.2"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "sass": "^1.32.12"
   }
 }

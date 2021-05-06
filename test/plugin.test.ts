@@ -1,33 +1,46 @@
-import { readFileSync } from 'fs'
+import { copyFileSync, readFileSync } from 'fs'
 import { join } from 'path'
 import execa from 'execa'
 import glob from 'fast-glob'
 import { build, InlineConfig } from 'vite'
 
-type Fixture = 'blog'
+type Fixture = 'a' | 'b' | 'c'
 
-function compiledApp (name: Fixture, distDir = 'vite') {
-  const distPath = join(__dirname, 'fixtures', name, `public/${distDir}`)
+function compiledFile (name: Fixture) {
+  const distPath = join(__dirname, 'fixtures', 'blog', 'public', name)
   const files = glob.sync('assets/application.*.js', { cwd: distPath })
   return readFileSync(join(distPath, files[0]), { encoding: 'utf8' })
 }
 
 async function buildFixture (name: Fixture, { mode }: InlineConfig) {
-  await execa('bin/vite', ['build', '--clear', '--mode', mode], { cwd: join(__dirname, 'fixtures', name) })
+  await execa('bin/vite', ['build', '--clear', '--mode', mode], {
+    cwd: join(__dirname, 'fixtures', 'blog'),
+    env: {
+      VITE_RUBY_ENTRYPOINTS_DIR: `entrypoints_${name}`,
+      VITE_RUBY_PUBLIC_OUTPUT_DIR: name,
+    },
+  })
 }
 
 describe('erb', () => {
-  test('replaces the variables', async (done) => {
+  test('javascript and css', async (done) => {
     expect.assertions(1)
-    await buildFixture('blog', { mode: 'production' })
-    expect(compiledApp('blog')).toContain('console.log({rackEnv:"production",railsEnv:"production"})')
+    await buildFixture('a', { mode: 'production' })
+    expect(compiledFile('a')).toContain('console.log({rackEnv:"production",railsEnv:"production"})')
     done()
   })
 
-  test('replaces the variables', async (done) => {
+  test('typescript and sass', async (done) => {
     expect.assertions(1)
-    await buildFixture('blog', { mode: 'development' })
-    expect(compiledApp('blog', 'vite-dev')).toContain('console.log({rackEnv:"development",railsEnv:"development"})')
+    await buildFixture('b', { mode: 'development' })
+    expect(compiledFile('b')).toContain('console.log({rackEnv:"development",railsEnv:"development"})')
+    done()
+  })
+
+  test('jsx', async (done) => {
+    expect.assertions(1)
+    await buildFixture('c', { mode: 'test' })
+    expect(compiledFile('c')).toContain('console.log({rackEnv:"test",railsEnv:"test"})')
     done()
   })
 })

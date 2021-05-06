@@ -1,6 +1,6 @@
 import { parse as parseQuery } from 'querystring'
 import { join, relative } from 'path'
-import { accessSync, createReadStream } from 'fs'
+import { accessSync } from 'fs'
 import execa from 'execa'
 import createDebugger from 'debug'
 
@@ -60,13 +60,12 @@ function detectRunner (root: string) {
 }
 
 // Internal: Creates a child Ruby process to which
-async function renderErbFile (cwd: string, filename: string, options: Options) {
+async function renderErbFile (cwd: string, filename: string, code: string, options: Options) {
   const { engine = '', runner = '', ...execOptions } = options
   const path = relative(cwd, filename)
   try {
     const [cmd, ...cmdArgs] = runner.split(' ')
     const args = [...cmdArgs, rendererPath, outputDelimiter, engine].filter(x => x)
-    const code = createReadStream(filename, { encoding: 'utf-8' })
 
     debug(`rendering ${path}`)
     const rubyProcess = execa(cmd, args, { input: code, cwd, timeout: 10000, killSignal: 'SIGKILL', ...execOptions })
@@ -90,7 +89,7 @@ function parseId (id: string) {
   const [filename, rawQuery] = id.split('?', 2)
   const query = parseQuery(rawQuery) as ErbQuery
   if (query.erb !== undefined || filename.endsWith('.erb')) query.erb = true
-  return { filename: filename.split('.erb', 2)[0], query }
+  return { filename: filename.split('.erb')[0], query }
 }
 
 /**
@@ -98,21 +97,27 @@ function parseId (id: string) {
  */
 export default function ErbPlugin (options: Options = {}): Plugin {
   let root: string
+  let plugins: readonly Plugin[]
   return {
     name: 'erb-plugin',
     enforce: 'pre',
     configResolved (config) {
+      plugins = config.plugins
       root = process.env.VITE_RUBY_ROOT || config.root
       if (!options.runner) options.runner = detectRunner(root)
       debug(`running renderer with '${options.runner}'`)
     },
-    resolveId (id) {
+    async transform (code, id, ssr) {
       const { filename, query } = parseId(id)
-      if (query.erb) return `${filename.split('.erb', 2)[0]}?erb`
-    },
-    async load (id) {
-      const { filename, query } = parseId(id)
-      if (query.erb) return await renderErbFile(root, `${filename}.erb`, options)
+      if (query.erb) {
+        code = await renderErbFile(root, `${filename}.erb`, code, options)
+        for (let i = 0; i < plugins.length; i++) {
+          const result = await plugins[i].transform?.call(this, code, filename, ssr)
+          if (!result) continue
+          code = typeof result === 'object' ? result.code || code : result
+        }
+        return code
+      }
     },
   }
 }

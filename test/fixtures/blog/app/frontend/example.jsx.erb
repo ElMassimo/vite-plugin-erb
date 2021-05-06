@@ -1,0 +1,8 @@
+import React from 'react'
+
+export const rackEnv = <%= ENV['RACK_ENV'].to_json %>
+export const railsEnv = <%= Rails.env.to_json %>
+
+export default function Paraphraph ({ children, ...props }) {
+  return <p {...props}>{props.children}</p>
+}
