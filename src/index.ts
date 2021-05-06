@@ -1,6 +1,6 @@
 import { parse as parseQuery } from 'querystring'
-import { join } from 'path'
-import { promises as fs } from 'fs'
+import { join, relative } from 'path'
+import { accessSync, createReadStream } from 'fs'
 import execa from 'execa'
 import createDebugger from 'debug'
 
@@ -49,9 +49,9 @@ const renderedOutputRegex = new RegExp(`${outputDelimiter}([\\s\\S]*?)${outputDe
 const rendererPath = join(__dirname, '../src/renderer.rb')
 
 // Internal: Detects a Rails installation in order to use the bin/rails binstub.
-async function detectRunner (root: string) {
+function detectRunner (root: string) {
   try {
-    await fs.access(join(root, 'bin/rails'))
+    accessSync(join(root, 'bin/rails'))
     return 'ruby bin/rails runner'
   }
   catch {
@@ -60,36 +60,37 @@ async function detectRunner (root: string) {
 }
 
 // Internal: Creates a child Ruby process to which
-async function renderErbFile (code: string, id: string, options: Options, cwd: string) {
+async function renderErbFile (cwd: string, filename: string, options: Options) {
   const { engine = '', runner = '', ...execOptions } = options
+  const path = relative(cwd, filename)
   try {
-    debug(`rendering ${id}`)
     const [cmd, ...cmdArgs] = runner.split(' ')
     const args = [...cmdArgs, rendererPath, outputDelimiter, engine].filter(x => x)
+    const code = createReadStream(filename, { encoding: 'utf-8' })
+
+    debug(`rendering ${path}`)
     const rubyProcess = execa(cmd, args, { input: code, cwd, timeout: 10000, killSignal: 'SIGKILL', ...execOptions })
-
     const { stdout } = await rubyProcess
-    const matches = stdout.match(renderedOutputRegex)
-    if (!matches) throw new Error(`No output when rendering ${id}. Is the file valid?`)
 
-    debug(`rendered ${id}`, { code: matches[1] })
+    const matches = stdout.match(renderedOutputRegex)
+    if (!matches) throw new Error(`No output when rendering ${filename}. Is the file valid?`)
+
+    debug(`rendered ${path}`)
     return matches[1]
   }
   catch (error) {
-    debug(`failed to render ERB file ${id}`, error)
+    debug(`failed to render ERB file ${path}`, error)
     throw error
   }
 }
 
-export interface ErbQuery {
-  erb?: boolean
-}
+type ErbQuery = ReturnType<typeof parseQuery> & { erb?: boolean }
 
-function parseId(id: string) {
-  const [filename, rawQuery] = id.split(`?`, 2)
+function parseId (id: string) {
+  const [filename, rawQuery] = id.split('?', 2)
   const query = parseQuery(rawQuery) as ErbQuery
-  if (query.erb !== undefined) query.erb = true
-  return { filename, query }
+  if (query.erb !== undefined || filename.endsWith('.erb')) query.erb = true
+  return { filename: filename.split('.erb', 2)[0], query }
 }
 
 /**
@@ -100,19 +101,18 @@ export default function ErbPlugin (options: Options = {}): Plugin {
   return {
     name: 'erb-plugin',
     enforce: 'pre',
-    async configResolved (config) {
+    configResolved (config) {
       root = process.env.VITE_RUBY_ROOT || config.root
-      if (!options.runner) options.runner = await detectRunner(root)
+      if (!options.runner) options.runner = detectRunner(root)
+      debug(`running renderer with '${options.runner}'`)
     },
-    async transform (code, id) {
+    resolveId (id) {
       const { filename, query } = parseId(id)
-      if (query.erb || filename.endsWith('.erb') || filename.includes('.erb.')) {
-        debug(`transforming ${filename}`, { query })
-        return {
-          code: await renderErbFile(code, id, options, root),
-          map: null,
-        }
-      }
+      if (query.erb) return `${filename.split('.erb', 2)[0]}?erb`
+    },
+    async load (id) {
+      const { filename, query } = parseId(id)
+      if (query.erb) return await renderErbFile(root, `${filename}.erb`, options)
     },
   }
 }
