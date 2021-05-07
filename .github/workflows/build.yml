@@ -21,6 +21,10 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
+      - uses: ruby/setup-ruby@v1
+        with:
+          working-directory: test/fixtures/blog
+
       - uses: pnpm/action-setup@v1.2.1
         with:
           version: 5.13.6
