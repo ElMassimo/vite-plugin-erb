@@ -21,6 +21,7 @@
 [Vite Ruby]: https://vite-ruby.netlify.app/config/#source-maps-%F0%9F%97%BA
 [sprockets]: https://github.com/rails/sprockets
 [jsfromroutes]: https://github.com/ElMassimo/js_from_routes
+[spring]: https://github.com/rails/spring
 
 ## Disclaimer ⚠️
 
@@ -129,6 +130,17 @@ Set to false if you want to override `process.env` instead when providing the <k
 
 Te Ruby process will be sent a termination signal if it doesn't return a result
 under the specified timeout in millis. Defaults to `10000`.
+
+## A note about [spring] 🌺
+
+By default `DISABLE_SPRING: '1'` is set in <kbd>env</kbd> because if the
+[spring] client is started from Node.js the Ruby renderer process would never finish.
+
+This makes the rendering process significantly slower, specially in large apps.
+
+You may provide `env: { DISABLE_SPRING: '0' }` to re-enable [spring], but make
+sure to run `bin/rails runner ''` before starting the Vite dev server to prevent
+this issue, or reload the page after the first visit (which would timeout).
 
 ## Acknowledgements
 
