@@ -41,3 +41,5 @@ selenium-server.log
 
 # Plugin Tests
 .port
+
+test/fixtures/blog/Gemfile.lock

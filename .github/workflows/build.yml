@@ -23,6 +23,7 @@ jobs:
 
       - uses: ruby/setup-ruby@v1
         with:
+          bundler-cache: true
           working-directory: test/fixtures/blog
 
       - uses: pnpm/action-setup@v1.2.1
