@@ -11,11 +11,13 @@ engines = {
   'erb'    => ->(code) { ERB.new(code).result },
 }
 engine = ARGV[1] || engines.keys.find { |name| Gem.loaded_specs[name] } || 'erb'
+puts "Engine: #{engine}"
 require engine
 
 # Render the template and enclose it in delimiters to be extracted later.
 code = STDIN.read
+puts "Code:\n#{code}"
 renderer = engines.fetch(engine)
 puts "#{delimiter}#{renderer.call(code)}#{delimiter}"
-puts 'Rendered!'
+puts "Rendered in #{ Process.pid }, which is a child of #{ Process.ppid }"
 exit(0)

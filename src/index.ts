@@ -12,6 +12,11 @@ const debug = createDebugger('vite-plugin-erb')
 
 interface Options {
   /**
+   * Whether to output debug information of the renderer.
+   * @default false
+   */
+  debug?: boolean
+  /**
    * ERB Template engine, "erubi", "erubis" and "erb" are supported.
    * @default 'erubi' if available, fallback to 'erb'
    */
@@ -61,14 +66,17 @@ function detectRunner (root: string) {
 
 // Internal: Creates a child Ruby process to which
 async function renderErbFile (cwd: string, filename: string, code: string, options: Options) {
-  const { engine = '', runner = '', ...execOptions } = options
+  const { debug: pipeStdout, engine = '', runner = '', ...execOptions } = options
   const path = relative(cwd, filename)
   try {
     const [cmd, ...cmdArgs] = runner.split(' ')
     const args = [...cmdArgs, rendererPath, outputDelimiter, engine].filter(x => x)
 
     debug(`rendering ${path}`)
-    const rubyProcess = execa(cmd, args, { input: code, cwd, timeout: 10000, killSignal: 'SIGKILL', ...execOptions })
+    const rubyProcess = execa(cmd, args, { cwd, timeout: 10000, killSignal: 'SIGKILL', ...execOptions })
+    if (pipeStdout) rubyProcess.stdout?.pipe(process.stdout)
+    rubyProcess.stdin?.write(code)
+    rubyProcess.stdin?.end()
     const { stdout } = await rubyProcess
 
     const matches = stdout.match(renderedOutputRegex)
@@ -111,10 +119,10 @@ export default function ErbPlugin (options: Options = {}): Plugin {
       const { filename, query } = parseId(id)
       if (query.erb) {
         code = await renderErbFile(root, `${filename}.erb`, code, options)
-        for (let i = 0; i < plugins.length; i++) {
-          const result = await plugins[i].transform?.call(this, code, filename, ssr)
-          if (!result) continue
-          code = typeof result === 'object' ? result.code || code : result
+        for (const plugin of plugins) {
+          const result = await plugin.transform?.call(this, code, filename, ssr)
+          if (result)
+            code = typeof result === 'object' ? result.code || '' : result
         }
         return code
       }
