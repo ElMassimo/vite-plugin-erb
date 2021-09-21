@@ -100,7 +100,7 @@ export default function ErbPlugin (options: Options = {}): Plugin {
     name: 'erb-plugin',
     enforce: 'pre',
     configResolved (config) {
-      plugins = config.plugins
+      plugins = config.plugins.filter(p => p.name !== 'vite:import-analysis')
       root = process.env.VITE_RUBY_ROOT || config.root
       if (!options.runner) options.runner = detectRunner(root)
       debug(`running renderer with '${options.runner}'`)
