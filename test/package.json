@@ -3,8 +3,5 @@
   "private": true,
   "devDependencies": {
     "vite-plugin-erb": "workspace:*"
-  },
-  "dependencies": {
-    "execa": "^5.0.0"
   }
 }
