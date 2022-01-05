@@ -1,3 +1,12 @@
+# [1.1.0](https://github.com/ElMassimo/vite-plugin-erb/compare/v1.0.1...v1.1.0) (2022-01-05)
+
+
+### Bug Fixes
+
+* default export when using `"type": "module"` vite project ([32447f2](https://github.com/ElMassimo/vite-plugin-erb/commit/32447f24ef757c894cf690228779fb4fb138edbb))
+
+
+
 ## [1.0.1](https://github.com/ElMassimo/vite-plugin-erb/compare/v1.0.0...v1.0.1) (2021-09-21)
 
 
