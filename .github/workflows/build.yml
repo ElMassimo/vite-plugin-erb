@@ -6,20 +6,14 @@ jobs:
   build:
     name: Test Plugin
 
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node: [12.x, 14.x]
-
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v1
+      - uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 14.x
 
       - uses: ruby/setup-ruby@v1
         with:

@@ -1,6 +1,7 @@
 require_relative "boot"
 
 require "rails"
+require "action_controller"
 
 Bundler.require(*Rails.groups)
 
