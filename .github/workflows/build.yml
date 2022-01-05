@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-    name: Test Plugins
+    name: Test Plugin
 
     strategy:
       matrix:
@@ -37,25 +37,6 @@ jobs:
 
       - name: Test
         run: pnpm test
-
-  lint:
-    name: Lint Plugins
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
-
-      - uses: pnpm/action-setup@v1.2.1
-        with:
-          version: 5.13.6
-          run_install: |
-            - recursive: false
 
       - name: Lint
         run: pnpm lint
