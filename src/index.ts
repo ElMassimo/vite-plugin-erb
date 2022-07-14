@@ -40,7 +40,9 @@ interface Options {
   timeout?: number
 }
 
-const _dirname = dirname(fileURLToPath(import.meta.url))
+const _dirname = typeof __dirname === 'undefined'
+  ? dirname(fileURLToPath(import.meta.url))
+  : __dirname
 
 // Because the child Ruby process can output warnings or other messages, we
 // add a delimiter to the output of the renderer to cleanly extract it.
