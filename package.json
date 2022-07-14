@@ -18,7 +18,7 @@
     "src/renderer.rb"
   ],
   "type": "module",
-  "main": "./dist/index.cjs",
+  "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -64,13 +64,13 @@
     "pinst": "^2.1.6",
     "rollup": "^2.59",
     "semver": "^7.3.5",
-    "tsup": "^5",
+    "tsup": "^6",
     "typescript": "^4.5",
-    "vite": "^2.7",
-    "vitest": "^0.0.132"
+    "vite": ">= 2.7",
+    "vitest": "^0.8"
   },
   "peerDependencies": {
-    "vite": "^2.7"
+    "vite": ">= 2.7"
   },
   "lint-staged": {
     "*.{js,ts}": [

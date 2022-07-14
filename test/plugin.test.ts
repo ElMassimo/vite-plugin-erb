@@ -1,8 +1,8 @@
-import { copyFileSync, readFileSync } from 'fs'
+import { readFileSync } from 'fs'
 import { join } from 'path'
 import execa from 'execa'
 import glob from 'fast-glob'
-import { build, InlineConfig } from 'vite'
+import type { InlineConfig } from 'vite'
 import { describe, test, expect } from 'vitest'
 
 type Fixture = 'a' | 'b' | 'c'
@@ -24,24 +24,24 @@ async function buildFixture (name: Fixture, { mode }: InlineConfig) {
 }
 
 describe('erb', () => {
-  test('javascript and css', async (done) => {
-    expect.assertions(1)
+  test('javascript and css', async () => {
     await buildFixture('a', { mode: 'production' })
-    expect(compiledFile('a')).toContain('console.log({rackEnv:"production",railsEnv:"production"})')
-    done()
+    const result = compiledFile('a')
+    expect(result).toContain('"production"')
+    expect(result).toMatchSnapshot()
   }, 10000)
 
-  test('typescript and sass', async (done) => {
-    expect.assertions(1)
+  test('typescript and sass', async () => {
     await buildFixture('b', { mode: 'development' })
-    expect(compiledFile('b')).toContain('console.log({rackEnv:"development",railsEnv:"development"})')
-    done()
+    const result = compiledFile('b')
+    expect(result).toContain('"development"')
+    expect(result).toMatchSnapshot()
   }, 10000)
 
-  test('jsx', async (done) => {
-    expect.assertions(1)
+  test('jsx', async () => {
     await buildFixture('c', { mode: 'test' })
-    expect(compiledFile('c')).toContain('console.log({rackEnv:"test",railsEnv:"test"})')
-    done()
+    const result = compiledFile('c')
+    expect(result).toContain('"test"')
+    expect(result).toMatchSnapshot()
   }, 10000)
 })

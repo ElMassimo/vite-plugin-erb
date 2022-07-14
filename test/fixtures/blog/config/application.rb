@@ -1,7 +1,6 @@
 require_relative "boot"
 
-require "rails"
-require "action_controller"
+require "action_controller/railtie"
 
 Bundler.require(*Rails.groups)
 
@@ -10,5 +9,6 @@ module Blog
     COLOR = '#C00'
 
     config.load_defaults 6.1
+    config.eager_load = true
   end
 end

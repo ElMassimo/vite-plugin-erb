@@ -1,5 +1,6 @@
 import { parse as parseQuery } from 'querystring'
-import { join, relative } from 'path'
+import { join, dirname, relative } from 'path'
+import { fileURLToPath } from 'url'
 import { accessSync } from 'fs'
 import execa from 'execa'
 import createDebugger from 'debug'
@@ -39,6 +40,8 @@ interface Options {
   timeout?: number
 }
 
+const _dirname = dirname(fileURLToPath(import.meta.url))
+
 // Because the child Ruby process can output warnings or other messages, we
 // add a delimiter to the output of the renderer to cleanly extract it.
 const outputDelimiter = '__VITE_ERB_RESULT__'
@@ -46,7 +49,7 @@ const renderedOutputRegex = new RegExp(`${outputDelimiter}([\\s\\S]*?)${outputDe
 
 // Internal: A small Ruby script that renders the ERB template and encloses the
 // output with delimiters.
-const rendererPath = join(__dirname, '../src/renderer.rb')
+const rendererPath = join(_dirname, '../src/renderer.rb')
 
 // Internal: Detects a Rails installation in order to use the bin/rails binstub.
 function detectRunner (root: string) {
