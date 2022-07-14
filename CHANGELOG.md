@@ -1,3 +1,12 @@
+## [1.1.2](https://github.com/ElMassimo/vite-plugin-erb/compare/v1.1.1...v1.1.2) (2022-07-14)
+
+
+### Bug Fixes
+
+* esm incompatibility with __dirname ([1c6d556](https://github.com/ElMassimo/vite-plugin-erb/commit/1c6d556da06a3ac9b6d650ed4f8e7150b7de5c1f))
+
+
+
 ## [1.1.1](https://github.com/ElMassimo/vite-plugin-erb/compare/v1.1.0...v1.1.1) (2022-07-14)
 
 
