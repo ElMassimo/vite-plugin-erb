@@ -1,3 +1,12 @@
+## [1.1.1](https://github.com/ElMassimo/vite-plugin-erb/compare/v1.1.0...v1.1.1) (2022-07-14)
+
+
+### Features
+
+* update peer dependencies to support Vite 3 ([21e11b2](https://github.com/ElMassimo/vite-plugin-erb/commit/21e11b29f0667526962855b4b835b3d01ba65eee))
+
+
+
 # [1.1.0](https://github.com/ElMassimo/vite-plugin-erb/compare/v1.0.1...v1.1.0) (2022-01-05)
 
 
