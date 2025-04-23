@@ -9,7 +9,7 @@ type Fixture = 'a' | 'b' | 'c'
 
 function compiledFile (name: Fixture) {
   const distPath = join(__dirname, 'fixtures', 'blog', 'public', name)
-  const files = glob.sync('assets/application.*.js', { cwd: distPath })
+  const files = glob.sync('assets/application-*.js', { cwd: distPath })
   return readFileSync(join(distPath, files[0]), { encoding: 'utf8' })
 }
 

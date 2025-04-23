@@ -23,16 +23,15 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
     }
   },
   "scripts": {
     "lint": "eslint .",
     "test": "vitest",
     "dev": "npm run build -- --watch",
-    "build": "tsup src/index.ts --dts --format cjs,esm --clean",
+    "build": "tsup src/index.ts --dts --format esm --clean",
     "release": "node scripts/release.cjs",
     "postinstall": "husky install",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
@@ -66,11 +65,11 @@
     "semver": "^7.3.5",
     "tsup": "^6",
     "typescript": "^4.5",
-    "vite": ">= 2.7",
-    "vitest": "^0.8"
+    "vite": ">= 5",
+    "vitest": "^2.1.5"
   },
   "peerDependencies": {
-    "vite": ">= 2.7"
+    "vite": ">= 5"
   },
   "lint-staged": {
     "*.{js,ts}": [

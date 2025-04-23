@@ -116,9 +116,13 @@ export default function ErbPlugin (options: Options = {}): Plugin {
 
       code = await renderErbFile(root, `${filename}.erb`, code, options)
       for (const plugin of plugins) {
-        const result = await plugin.transform?.call(this, code, filename, ssr)
-        if (result)
-          code = typeof result === 'object' ? result.code || '' : result
+        const transform = plugin.transform
+        const transformFn = typeof transform === 'object' ? (transform as any).handler : transform
+        if (typeof transformFn === 'function') {
+          const result = await transformFn.call(this, code, filename, ssr)
+          if (result)
+            code = typeof result === 'object' ? result.code || '' : result
+        }
       }
       return code
     },
