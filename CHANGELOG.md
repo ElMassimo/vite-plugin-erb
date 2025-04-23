@@ -1,3 +1,12 @@
+## [1.1.3](https://github.com/ElMassimo/vite-plugin-erb/compare/v1.1.2...v1.1.3) (2025-04-23)
+
+
+### Bug Fixes
+
+* handle plugins that have an object transform with `handler` (closes [#5](https://github.com/ElMassimo/vite-plugin-erb/issues/5)) ([0aba156](https://github.com/ElMassimo/vite-plugin-erb/commit/0aba156341d8e937d920741009df093058dbcb62))
+
+
+
 ## [1.1.2](https://github.com/ElMassimo/vite-plugin-erb/compare/v1.1.1...v1.1.2) (2022-07-14)
 
 
