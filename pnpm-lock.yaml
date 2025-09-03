@@ -14,6 +14,9 @@ importers:
       execa:
         specifier: ^5.0
         version: 5.1.1
+      picomatch:
+        specifier: ^4.0.3
+        version: 4.0.3
     devDependencies:
       '@mussi/eslint-config':
         specifier: ^0.5
@@ -24,6 +27,9 @@ importers:
       '@types/debug':
         specifier: ^4.1.5
         version: 4.1.12
+      '@types/picomatch':
+        specifier: ^4.0.2
+        version: 4.0.2
       '@typescript-eslint/eslint-plugin':
         specifier: ^4.12.0
         version: 4.33.0(@typescript-eslint/parser@4.33.0(eslint@7.32.0)(typescript@4.9.5))(eslint@7.32.0)(typescript@4.9.5)
@@ -903,6 +909,9 @@ packages:
   '@types/parse-json@4.0.2':
     resolution: {integrity: sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==}
 
+  '@types/picomatch@4.0.2':
+    resolution: {integrity: sha512-qHHxQ+P9PysNEGbALT8f8YOSHW0KJu6l2xU8DYY0fu/EmGxXdVnuTLvFUvBgPJMSqXq29SYHveejeAha+4AYgA==}
+
   '@typescript-eslint/eslint-plugin@4.33.0':
     resolution: {integrity: sha512-aINiAxGVdOl1eJyVjaWn/YcVAq4Gi/Yo35qHGCnqbWVz61g39D0h23veY/MA0rFFGfxK7TySg2uwDeNv+JgVpg==}
     engines: {node: ^10.12.0 || >=12.0.0}
@@ -1237,7 +1246,7 @@ packages:
     resolution: {integrity: sha512-zHig5N+tPWARooBnb0Zx1MFcdfpyJrfTJ3Y5L+IFvUm8rM74hHz66z0gw0x4tijh5CorKkKUCnW82R2vmpeCRA==}
 
   concat-map@0.0.1:
-    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
   conventional-changelog-angular@5.0.13:
     resolution: {integrity: sha512-i/gipMxs7s8L/QeuavPF2hLnJgH6pEZAttySB6aiQLWcX3puWDL3ACVmvBhJGxnAy52Qc15ua26BufY6KpmrVA==}
@@ -2490,8 +2499,8 @@ packages:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
 
-  picomatch@4.0.2:
-    resolution: {integrity: sha512-M7BAV6Rlcy5u+m6oPhAPFgJTzAioX/6B0DxyvDlo9l8+T3nLKbrczg2WLUyzd45L8RqfUMyGPzekbMvX2Ldkwg==}
+  picomatch@4.0.3:
+    resolution: {integrity: sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==}
     engines: {node: '>=12'}
 
   pify@2.3.0:
@@ -2808,6 +2817,7 @@ packages:
   source-map@0.8.0-beta.0:
     resolution: {integrity: sha512-2ymg6oRBpebeZi9UUNsgQ89bhx01TcTkmNTGnNO88imTmbSgy4nfujrgVEFKWpMTEGA11EDkTt7mqObTPdigIA==}
     engines: {node: '>= 8'}
+    deprecated: The work that was done in this beta branch won't be included in future versions
 
   spdx-correct@3.2.0:
     resolution: {integrity: sha512-kN9dJbvnySHULIluDHy32WHRUu3Og7B9sbY7tsFLctQkIqnMh3hErYgdMjTYuqmcXX+lK5T1lnUt3G7zNswmZA==}
@@ -3910,6 +3920,8 @@ snapshots:
   '@types/normalize-package-data@2.4.4': {}
 
   '@types/parse-json@4.0.2': {}
+
+  '@types/picomatch@4.0.2': {}
 
   '@typescript-eslint/eslint-plugin@4.33.0(@typescript-eslint/parser@4.33.0(eslint@7.32.0)(typescript@4.9.5))(eslint@7.32.0)(typescript@4.9.5)':
     dependencies:
@@ -5030,9 +5042,9 @@ snapshots:
     dependencies:
       reusify: 1.1.0
 
-  fdir@6.4.4(picomatch@4.0.2):
+  fdir@6.4.4(picomatch@4.0.3):
     optionalDependencies:
-      picomatch: 4.0.2
+      picomatch: 4.0.3
 
   file-entry-cache@6.0.1:
     dependencies:
@@ -5819,7 +5831,7 @@ snapshots:
 
   picomatch@2.3.1: {}
 
-  picomatch@4.0.2: {}
+  picomatch@4.0.3: {}
 
   pify@2.3.0: {}
 
@@ -6345,8 +6357,8 @@ snapshots:
 
   tinyglobby@0.2.13:
     dependencies:
-      fdir: 6.4.4(picomatch@4.0.2)
-      picomatch: 4.0.2
+      fdir: 6.4.4(picomatch@4.0.3)
+      picomatch: 4.0.3
 
   tinypool@1.0.2: {}
 
@@ -6528,8 +6540,8 @@ snapshots:
   vite@6.3.2(@types/node@22.14.1)(sass@1.87.0):
     dependencies:
       esbuild: 0.25.3
-      fdir: 6.4.4(picomatch@4.0.2)
-      picomatch: 4.0.2
+      fdir: 6.4.4(picomatch@4.0.3)
+      picomatch: 4.0.3
       postcss: 8.5.3
       rollup: 4.40.0
       tinyglobby: 0.2.13
