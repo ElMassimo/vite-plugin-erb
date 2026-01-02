@@ -1,3 +1,12 @@
+# [1.2.0](https://github.com/ElMassimo/vite-plugin-erb/compare/v1.1.3...v1.2.0) (2026-01-02)
+
+
+### Bug Fixes
+
+* handle vite/rollup plugins with hook filters ([#8](https://github.com/ElMassimo/vite-plugin-erb/issues/8)) ([5e41111](https://github.com/ElMassimo/vite-plugin-erb/commit/5e41111709d27021f7ca4417a83ebbae944bfcec))
+
+
+
 ## [1.1.3](https://github.com/ElMassimo/vite-plugin-erb/compare/v1.1.2...v1.1.3) (2025-04-23)
 
 
