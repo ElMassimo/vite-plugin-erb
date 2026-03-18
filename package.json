@@ -18,23 +18,21 @@
     "src/renderer.rb"
   ],
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
     }
   },
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
   "scripts": {
-    "lint": "eslint .",
+    "lint": "vp lint",
     "test": "vp test",
     "dev": "npm run build -- --watch",
-    "build": "tsup src/index.ts --dts --format esm --clean",
+    "build": "vp pack src/index.ts --dts --format esm --clean",
     "release": "node scripts/release.cjs",
-    "postinstall": "husky install",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "changelog": "conventional-changelog-cli -p angular -i CHANGELOG.md -s",
     "prepublishOnly": "pinst --disable && npm run build",
     "postpublish": "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags && pinst --enable"
   },
@@ -55,13 +53,10 @@
     "cross-spawn": "^7.0.3",
     "enquirer": "^2.3.6",
     "eslint": "^7.17.0",
-    "fast-glob": "^3.2",
-    "husky": "^5.1.3",
-    "lint-staged": "^10.5.4",
+    "tinyglobby": "^0.2",
     "minimist": "^1.2.5",
     "picocolors": "^1.0.0",
     "pinst": "^2.1.6",
-
     "semver": "^7.3.5",
     "tsup": "^6",
     "typescript": "^5.7",
@@ -71,11 +66,6 @@
   },
   "peerDependencies": {
     "vite": ">= 8"
-  },
-  "lint-staged": {
-    "*.{js,ts}": [
-      "eslint --fix"
-    ]
   },
   "eslintConfig": {
     "extends": [

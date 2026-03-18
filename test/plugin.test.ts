@@ -1,20 +1,20 @@
+import execa from 'execa'
 import { readFileSync } from 'fs'
 import { join } from 'path'
-import execa from 'execa'
-import glob from 'fast-glob'
+import { globSync } from 'tinyglobby'
 import type { InlineConfig } from 'vite-plus'
-import { describe, test, expect } from 'vite-plus/test'
+import { describe, expect, test } from 'vite-plus/test'
 
 type Fixture = 'a' | 'b' | 'c'
 
 function compiledFile (name: Fixture) {
   const distPath = join(__dirname, 'fixtures', 'blog', 'public', name)
-  const files = glob.sync('assets/application-*.js', { cwd: distPath })
+  const files = globSync('assets/application-*.js', { cwd: distPath })
   return readFileSync(join(distPath, files[0]), { encoding: 'utf8' })
 }
 
 async function buildFixture (name: Fixture, { mode }: InlineConfig) {
-  await execa('bin/vite', ['build', '--clear', '--mode', mode], {
+  await execa('bin/vite', ['build', '--clear', '--mode', mode!], {
     cwd: join(__dirname, 'fixtures', 'blog'),
     env: {
       VITE_RUBY_ENTRYPOINTS_DIR: `entrypoints_${name}`,
