@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vite-plus'
 import ERB from 'vite-plugin-erb'
 import RubyPlugin from 'vite-plugin-ruby'
 

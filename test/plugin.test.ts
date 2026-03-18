@@ -2,8 +2,8 @@ import { readFileSync } from 'fs'
 import { join } from 'path'
 import execa from 'execa'
 import glob from 'fast-glob'
-import type { InlineConfig } from 'vite'
-import { describe, test, expect } from 'vitest'
+import type { InlineConfig } from 'vite-plus'
+import { describe, test, expect } from 'vite-plus/test'
 
 type Fixture = 'a' | 'b' | 'c'
 
@@ -27,21 +27,21 @@ describe('erb', () => {
   test('javascript and css', async () => {
     await buildFixture('a', { mode: 'production' })
     const result = compiledFile('a')
-    expect(result).toContain('"production"')
+    expect(result).toContain('production')
     expect(result).toMatchSnapshot()
   }, 10000)
 
   test('typescript and sass', async () => {
     await buildFixture('b', { mode: 'development' })
     const result = compiledFile('b')
-    expect(result).toContain('"development"')
+    expect(result).toContain('development')
     expect(result).toMatchSnapshot()
   }, 10000)
 
   test('jsx', async () => {
     await buildFixture('c', { mode: 'test' })
     const result = compiledFile('c')
-    expect(result).toContain('"test"')
+    expect(result).toContain('rackEnv')
     expect(result).toMatchSnapshot()
   }, 10000)
 })

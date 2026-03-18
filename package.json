@@ -29,7 +29,7 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "test": "vitest",
+    "test": "vp test",
     "dev": "npm run build -- --watch",
     "build": "tsup src/index.ts --dts --format esm --clean",
     "release": "node scripts/release.cjs",
@@ -50,7 +50,6 @@
     "@mussi/eslint-config": "^0.5",
     "@types/cross-spawn": "^6.0.2",
     "@types/debug": "^4.1.5",
-    "@types/picomatch": "^4.0.2",
     "@typescript-eslint/eslint-plugin": "^4.12.0",
     "conventional-changelog-cli": "^2.1.1",
     "cross-spawn": "^7.0.3",
@@ -62,15 +61,16 @@
     "minimist": "^1.2.5",
     "picocolors": "^1.0.0",
     "pinst": "^2.1.6",
-    "rollup": "^2.59",
+
     "semver": "^7.3.5",
     "tsup": "^6",
-    "typescript": "^4.5",
-    "vite": ">= 5",
-    "vitest": "^2.1.5"
+    "typescript": "^5.7",
+    "vite": "catalog:",
+    "vitest": "catalog:",
+    "vite-plus": "catalog:"
   },
   "peerDependencies": {
-    "vite": ">= 5"
+    "vite": ">= 8"
   },
   "lint-staged": {
     "*.{js,ts}": [
@@ -84,7 +84,7 @@
   },
   "dependencies": {
     "debug": "^4.3",
-    "execa": "^5.0",
-    "picomatch": "^4.0.3"
-  }
+    "execa": "^5.0"
+  },
+  "packageManager": "pnpm@10.32.1"
 }
